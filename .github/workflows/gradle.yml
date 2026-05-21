@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: '30 12 * * 3' 
-    - cron: '0 22 * * 5' 
+    - cron: '30 12 * * 3'
+    - cron: '0 22 * * 5'
 
 permissions:
   contents: read
@@ -29,9 +29,14 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: ${{ matrix.java }}
-          distribution: 'zulu'
+          distribution: 'zulu'   # поддерживает Java 13 и 17
 
+      # Даём права на выполнение gradlew (для Linux/macOS)
+      - name: Grant execute permission for gradlew
+        if: runner.os != 'Windows'
+        run: chmod +x gradlew
+
+      # Сборка и тесты с помощью Gradle Wrapper
       - name: Build with Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          arguments: build
+        run: ./gradlew build
+        shell: bash
