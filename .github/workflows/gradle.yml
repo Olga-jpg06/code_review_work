@@ -7,10 +7,7 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    # Формат: минуты часы день_месяца месяц день_недели
-    # каждую среду в 12:30 UTC
     - cron: '30 12 * * 3'
-    # каждую пятницу в 22:00 UTC
     - cron: '0 22 * * 5'
 
 permissions:
